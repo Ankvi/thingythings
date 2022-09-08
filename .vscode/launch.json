@@ -1,0 +1,23 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch API",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "cwd": "${workspaceFolder}",
+            "program": "${workspaceFolder}/server/ThingyThings.Server.Api/bin/Debug/net6.0/ThingyThings.Server.Api.dll",
+            "args": [],
+            "stopAtEntry": false,
+            "launchSettingsFilePath": "${workspaceFolder}/server/ThingyThings.Server.Api/Properties/launchSettings.json",
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            }
+        }
+
+    ]
+}
