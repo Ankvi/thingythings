@@ -1,9 +1,15 @@
+using MediatR;
+using ThingyThings.Server.Api;
+using ThingyThings.Server.Api.Contract.Requests;
+using ThingyThings.Server.Api.Handlers;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMediatR(x => x.AsScoped(), typeof(Program));
 
 var app = builder.Build();
 
@@ -15,6 +21,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapEndpoint<RecipesHandler, RecipesRequest>();
 
 var summaries = new[]
 {
@@ -37,7 +45,10 @@ app.MapGet("/weatherforecast", () =>
 
 app.Run();
 
-record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
+namespace ThingyThings.Server.Api
 {
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
+    {
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
 }
