@@ -8,15 +8,11 @@
             "name": "Launch API",
             "type": "coreclr",
             "request": "launch",
-            "preLaunchTask": "build",
-            "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/server/ThingyThings.Server.Api/bin/Debug/net6.0/ThingyThings.Server.Api.dll",
-            "args": [],
-            "stopAtEntry": false,
+            "preLaunchTask": "build-backend",
+            "cwd": "${workspaceFolder}/server/ThingyThings.Server.Api/",
+            "program": "${workspaceFolder}/server/ThingyThings.Server.Api/bin/Debug/net7.0/ThingyThings.Server.Api.dll",
             "launchSettingsFilePath": "${workspaceFolder}/server/ThingyThings.Server.Api/Properties/launchSettings.json",
-            "env": {
-                "ASPNETCORE_ENVIRONMENT": "Development"
-            }
+            "launchSettingsProfile": "ThingyThings.Server.Api.Development"
         }
 
     ]

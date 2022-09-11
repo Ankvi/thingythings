@@ -1,9 +1,11 @@
-﻿namespace ThingyThings.Server.Api.Handlers.Attributes;
+﻿using System;
+
+namespace ThingyThings.Server.Api.Handlers.Attributes;
 
 [AttributeUsage(AttributeTargets.Class)]
-public class PostEndpoint : HttpAttribute, IEndpointAttribute
+public class PostEndpoint : BaseEndpoint
 {
-    public PostEndpoint(string template) : base(template)
+    public PostEndpoint(string template) : base("POST", template)
     {
     }
 }

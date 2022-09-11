@@ -1,0 +1,19 @@
+{
+  "name": "webapp",
+  "version": "0.1.0",
+  "description": "ThingyThings frontend",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Ankvi/thingythings.git"
+  },
+  "author": "Andreas Kvist",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ankvi/thingythings/issues"
+  },
+  "homepage": "https://github.com/Ankvi/thingythings#readme"
+}

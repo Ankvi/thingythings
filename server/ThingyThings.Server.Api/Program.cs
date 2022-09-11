@@ -1,7 +1,10 @@
 using MediatR;
 using ThingyThings.Server.Api;
 using ThingyThings.Server.Api.Contract.Requests;
+using ThingyThings.Server.Api.Contract.Responses;
 using ThingyThings.Server.Api.Handlers;
+using ThingyThings.Server.Api.Repositories;
+using ThingyThings.Server.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +13,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(x => x.AsScoped(), typeof(Program));
+builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
+builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 var app = builder.Build();
 
@@ -22,7 +27,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapEndpoint<RecipesHandler, RecipesRequest>();
+app.MapEndpoint<GetRecipesRequest>();
+app.MapEndpoint<AddRecipeRequest>();
 
 var summaries = new[]
 {

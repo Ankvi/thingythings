@@ -1,15 +1,20 @@
 ﻿{
   "$schema": "https://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "ThingyThings.Server.Api": {
+    "ThingyThings.Server.Api.Development": {
       "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7059;http://localhost:5185",
+      "applicationUrl": "https://localhost:56534",
       "environmentVariables": {
+        "ASPNETCORE_URLS": "https://localhost:56534/",
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
-    }
+    },
+    "ThingyThings.Server.Api": {
+        "commandName": "Project",
+        "applicationUrl": "https://localhost:56534",
+        "environmentVariables": {
+          "ASPNETCORE_URLS": "https://localhost:56534/"
+        }
+      }
   }
 }

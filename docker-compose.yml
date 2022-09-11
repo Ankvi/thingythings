@@ -1,0 +1,8 @@
+services:
+  database:
+    image: ""
+  api:
+    networks:
+      - main
+networks:
+  main:

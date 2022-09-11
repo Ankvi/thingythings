@@ -1,12 +1,15 @@
-﻿namespace ThingyThings.Server.Api.Contract.Dtos;
+﻿using Microsoft.AspNetCore.Mvc;
 
-public record Recipe
+namespace ThingyThings.Server.Api.Contract.Dtos;
+
+public class Recipe
 {
-    public string Id { get; init; }
+    [FromBody]
+    public string Description { get; set; }
 
-    public string Description { get; init; }
+    [FromBody]
+    public IEnumerable<RecipeIngredient> Ingredients { get; set; }
 
-    public IEnumerable<RecipeIngredient> Ingredients { get; init; }
-
-    public IEnumerable<string> Steps { get; init; }
+    [FromBody]
+    public IEnumerable<string> Steps { get; set; }
 }
