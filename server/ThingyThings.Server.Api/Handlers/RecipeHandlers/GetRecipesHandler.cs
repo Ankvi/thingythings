@@ -18,29 +18,9 @@ public class GetRecipesHandler : IRequestHandler<GetRecipesRequest, IResult>
         _service = service;
     }
 
-    public async Task<IResult> Handle(GetRecipesRequest request, CancellationToken cancellationToken)
+    public async Task<IResult> Handle(GetRecipesRequest request, CancellationToken token)
     {
-        var recipes = new List<RecipeResponse>
-        {
-            new ()
-            {
-                Id = "1",
-                Description = "Pho",
-                Ingredients = new []
-                {
-                    new RecipeIngredient
-                    {
-                        Ingredient = new ("1", "Pork bones"),
-                        Amount = 5,
-                        Measurement = "Kg"
-                    }
-                },
-                Steps = new []
-                {
-                    "Do stuff"
-                }
-            }
-        };
+        var recipes = await _service.GetRecipes(token);
 
         return Results.Ok(recipes);
     }

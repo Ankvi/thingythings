@@ -1,20 +1,45 @@
 using MediatR;
+using Npgsql;
 using ThingyThings.Server.Api;
+using ThingyThings.Server.Api.Configuration;
 using ThingyThings.Server.Api.Contract.Requests;
-using ThingyThings.Server.Api.Contract.Responses;
-using ThingyThings.Server.Api.Handlers;
+using ThingyThings.Server.Api.Database;
+using ThingyThings.Server.Api.Mappers;
 using ThingyThings.Server.Api.Repositories;
 using ThingyThings.Server.Api.Services;
 
+DotEnv.Load(".env");
+
 var builder = WebApplication.CreateBuilder(args);
+
+NpgsqlConnection.GlobalTypeMapper.UseJsonNet();
+
+// var config = new ConfigurationBuilder()
+//     .SetBasePath(Directory.GetCurrentDirectory())
+//     .AddJsonFile("appsettings.json")
+//     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true)
+//     .AddEnvironmentVariables()
+//     .Build();
+
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddMediatR(x => x.AsScoped(), typeof(Program));
+
+var assembly = typeof(Program).Assembly;
+builder.Services.AddMediatR(assembly);
+
 builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
+
 builder.Services.AddScoped<IRecipeService, RecipeService>();
+builder.Services.AddScoped<IIngredientMapper, IngredientMapper>();
+builder.Services.AddScoped(typeof(IMapper<,>), assembly);
+
+// Postgres
+var postgresConfiguration = builder.Configuration.GetSection<PostgresConfiguration>();
+builder.Services.AddSingleton(postgresConfiguration!);
+builder.Services.AddSingleton<IPostgresConnector, PostgresConnector>();
 
 var app = builder.Build();
 
@@ -30,31 +55,4 @@ app.UseHttpsRedirection();
 app.MapEndpoint<GetRecipesRequest>();
 app.MapEndpoint<AddRecipeRequest>();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateTime.Now.AddDays(index),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
-
 app.Run();
-
-namespace ThingyThings.Server.Api
-{
-    record WeatherForecast(DateTime Date, int TemperatureC, string? Summary)
-    {
-        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-    }
-}

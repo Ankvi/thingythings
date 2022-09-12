@@ -3,3 +3,4 @@ node_modules
 [Oo]bj/
 
 .idea
+.env

@@ -1,8 +1,14 @@
 services:
-  database:
-    image: ""
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
   api:
-    networks:
-      - main
-networks:
-  main:
+    build: ./server
+    ports:
+      - "56534:56534"
+  web:
+    build: ./webapp
+    ports:
+      - "8080:8080"

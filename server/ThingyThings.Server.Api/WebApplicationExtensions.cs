@@ -9,12 +9,6 @@ public static class WebApplicationExtensions
     public static WebApplication MapEndpoint<TRequest>(this WebApplication app)
         where TRequest : IRequest<IResult>
     {
-        return app.MapEndpoint<TRequest, IResult>();
-    }
-
-    public static WebApplication MapEndpoint<TRequest, TResponse>(this WebApplication app)
-        where TRequest : IRequest<TResponse>
-    {
         var requestType = typeof(TRequest);
         var endpoint = requestType.GetCustomAttribute<BaseEndpoint>();
         switch (endpoint)
