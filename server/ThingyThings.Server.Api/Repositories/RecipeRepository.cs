@@ -9,30 +9,36 @@ namespace ThingyThings.Server.Api.Repositories;
 
 public interface IRecipeRepository
 {
-    Task<Recipe> AddRecipe(Recipe recipe);
+    Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token);
     Task<IEnumerable<Recipe>> GetRecipes(CancellationToken token);
-    Task AddIngredientToRecipe(string id, RecipeIngredient ingredient);
+    Task AddIngredientToRecipe(string id, RecipeIngredient ingredient, CancellationToken token);
 }
 
 public class RecipeRepository : IRecipeRepository
 {
-    private readonly IPostgresDatabase<Recipe> _database;
-    public Task<Recipe> AddRecipe(Recipe recipe)
+    private readonly IPostgresDatabase _database;
+
+    public RecipeRepository(IPostgresDatabase database)
+    {
+        _database = database;
+    }
+    
+    public Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token)
     {
         throw new NotImplementedException();
     }
 
     public async Task<IEnumerable<Recipe>> GetRecipes(CancellationToken token)
     {
-        var result = await _database.Get($@"
+        var result = await _database.Get<Recipe>($@"
             SELECT *
-            FROM {_database.GetTableName()}
+            FROM recipe.recipes
         ", token);
 
         return result;
     }
 
-    public Task AddIngredientToRecipe(string id, RecipeIngredient ingredient)
+    public Task AddIngredientToRecipe(string id, RecipeIngredient ingredient, CancellationToken token)
     {
         throw new NotImplementedException();
     }

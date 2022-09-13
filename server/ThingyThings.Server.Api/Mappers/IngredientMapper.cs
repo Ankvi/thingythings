@@ -1,28 +1,23 @@
-using ThingyThings.Server.Api.Contract.Dtos;
-using Internal =  ThingyThings.Server.Api.Models.Recipes;
+using ThingyThings.Server.Api.Contract.Requests.Ingredients;
+using ThingyThings.Server.Api.Contract.Responses;
+using ThingyThings.Server.Api.Models.Recipes;
 
 namespace ThingyThings.Server.Api.Mappers;
 
-public interface IIngredientMapper
-{
-    Internal.Ingredient Map(Ingredient input);
-    Ingredient Map(Internal.Ingredient input);
-}
-
 public class IngredientMapper :
-    IIngredientMapper
+    IMapper<AddIngredientRequest, Ingredient>,
+    IMapper<Ingredient, IngredientResponse>
 {
-    public Internal.Ingredient Map(Ingredient input)
+    public Ingredient Map(AddIngredientRequest input)
     {
-        return new()
+        return new Ingredient
         {
-            Id = input.Id,
-            Name = input.Name
+            Name = input.Body.Name
         };
     }
 
-    public Ingredient Map(Internal.Ingredient input)
+    public IngredientResponse Map(Ingredient input)
     {
-        return new Ingredient(input.Id, input.Name);
+        return new IngredientResponse(input.Id, input.Name);
     }
 }

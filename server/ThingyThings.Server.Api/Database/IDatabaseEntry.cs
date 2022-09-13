@@ -1,6 +1,10 @@
-﻿namespace ThingyThings.Server.Api.Database;
+﻿using Npgsql;
+
+namespace ThingyThings.Server.Api.Database;
 
 public interface IDatabaseEntry
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
+
+    public Task Parse(NpgsqlDataReader dataReader);
 }

@@ -1,6 +1,7 @@
 using System.Linq;
 using ThingyThings.Server.Api.Contract.Dtos;
 using ThingyThings.Server.Api.Contract.Requests;
+using ThingyThings.Server.Api.Contract.Requests.Recipes;
 using Internal =  ThingyThings.Server.Api.Models.Recipes;
 
 namespace ThingyThings.Server.Api.Mappers;

@@ -6,9 +6,9 @@ namespace ThingyThings.Server.Api.Services;
 
 public interface IRecipeService
 {
-    Task<Recipe> AddRecipe(Recipe recipe);
+    Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token);
     Task<IEnumerable<Recipe>> GetRecipes(CancellationToken token);
-    Task AddIngredientToRecipe(string id, RecipeIngredient ingredient);
+    Task AddIngredientToRecipe(string id, RecipeIngredient ingredient, CancellationToken token);
 }
 
 public class RecipeService : IRecipeService
@@ -20,9 +20,9 @@ public class RecipeService : IRecipeService
         _repository = repository;
     }
 
-    public async Task<Recipe> AddRecipe(Recipe recipe)
+    public async Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token)
     {
-        return await _repository.AddRecipe(recipe);
+        return await _repository.AddRecipe(recipe, token);
     }
 
     public async Task<IEnumerable<Recipe>> GetRecipes(CancellationToken token)
@@ -30,8 +30,8 @@ public class RecipeService : IRecipeService
         return await _repository.GetRecipes(token);
     }
 
-    public async Task AddIngredientToRecipe(string id, RecipeIngredient ingredient)
+    public async Task AddIngredientToRecipe(string id, RecipeIngredient ingredient, CancellationToken token)
     {
-        await _repository.AddIngredientToRecipe(id, ingredient);
+        await _repository.AddIngredientToRecipe(id, ingredient, token);
     }
 }

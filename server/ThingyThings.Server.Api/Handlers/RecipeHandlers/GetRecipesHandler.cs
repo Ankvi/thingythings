@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using MediatR;
 using ThingyThings.Server.Api.Contract.Dtos;
 using ThingyThings.Server.Api.Contract.Requests;
+using ThingyThings.Server.Api.Contract.Requests.Recipes;
 using ThingyThings.Server.Api.Contract.Responses;
 using ThingyThings.Server.Api.Handlers.Attributes;
 using ThingyThings.Server.Api.Services;

@@ -3,6 +3,8 @@ using Npgsql;
 using ThingyThings.Server.Api;
 using ThingyThings.Server.Api.Configuration;
 using ThingyThings.Server.Api.Contract.Requests;
+using ThingyThings.Server.Api.Contract.Requests.Ingredients;
+using ThingyThings.Server.Api.Contract.Requests.Recipes;
 using ThingyThings.Server.Api.Database;
 using ThingyThings.Server.Api.Mappers;
 using ThingyThings.Server.Api.Repositories;
@@ -30,16 +32,17 @@ builder.Services.AddSwaggerGen();
 var assembly = typeof(Program).Assembly;
 builder.Services.AddMediatR(assembly);
 
-builder.Services.AddSingleton<IRecipeRepository, RecipeRepository>();
-
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
 builder.Services.AddScoped<IRecipeService, RecipeService>();
-builder.Services.AddScoped<IIngredientMapper, IngredientMapper>();
+builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped(typeof(IMapper<,>), assembly);
 
 // Postgres
 var postgresConfiguration = builder.Configuration.GetSection<PostgresConfiguration>();
 builder.Services.AddSingleton(postgresConfiguration!);
 builder.Services.AddSingleton<IPostgresConnector, PostgresConnector>();
+builder.Services.AddScoped<IPostgresDatabase, PostgresDatabase>();
 
 var app = builder.Build();
 
@@ -54,5 +57,8 @@ app.UseHttpsRedirection();
 
 app.MapEndpoint<GetRecipesRequest>();
 app.MapEndpoint<AddRecipeRequest>();
+app.MapEndpoint<AddIngredientToRecipeRequest>();
+app.MapEndpoint<AddIngredientRequest>();
+app.MapEndpoint<GetIngredientsRequest>();
 
 app.Run();

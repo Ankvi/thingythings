@@ -1,19 +1,14 @@
 using ThingyThings.Server.Api.Contract.Dtos;
+using ThingyThings.Server.Api.Contract.Requests.Recipes;
 using Internal =  ThingyThings.Server.Api.Models.Recipes;
 
 namespace ThingyThings.Server.Api.Mappers;
 
 public class RecipeIngredientMapper :
+    IMapper<AddIngredientToRecipeRequest, Internal.RecipeIngredient>,
     IMapper<RecipeIngredient, Internal.RecipeIngredient>,
     IMapper<Internal.RecipeIngredient, RecipeIngredient>
 {
-    private readonly IIngredientMapper _ingredientMapper;
-
-    public RecipeIngredientMapper(IIngredientMapper ingredientMapper)
-    {
-        _ingredientMapper = ingredientMapper;
-    }
-
     public Internal.RecipeIngredient Map(RecipeIngredient input)
     {
         return new()
@@ -29,6 +24,15 @@ public class RecipeIngredientMapper :
         {
             IngredientId = input.IngredientId,
             Amount = input.Amount
+        };
+    }
+
+    public Internal.RecipeIngredient Map(AddIngredientToRecipeRequest input)
+    {
+        return new Internal.RecipeIngredient
+        {
+            IngredientId = input.Ingredient.IngredientId,
+            Amount = input.Ingredient.Amount
         };
     }
 }
