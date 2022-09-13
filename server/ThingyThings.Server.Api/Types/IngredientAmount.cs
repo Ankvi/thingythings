@@ -1,7 +1,12 @@
-﻿namespace ThingyThings.Server.Api.Types;
+﻿using System.Text.Json.Serialization;
 
-public class IngredientAmount
+
+namespace ThingyThings.Server.Api.Types;
+
+public record IngredientAmount
 {
     public decimal Amount { get; set; }
+    
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public Measurement Measurement { get; set; }
 }

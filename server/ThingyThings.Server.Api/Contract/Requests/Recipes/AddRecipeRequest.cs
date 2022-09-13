@@ -4,7 +4,7 @@ using ThingyThings.Server.Api.Handlers.Attributes;
 namespace ThingyThings.Server.Api.Contract.Requests.Recipes;
 
 [PostEndpoint("recipes")]
-public class AddRecipeRequest : Recipe, IHttpRequest
+public class AddRecipeRequest : HttpRequestWithBody<Recipe>
 {
 
 }

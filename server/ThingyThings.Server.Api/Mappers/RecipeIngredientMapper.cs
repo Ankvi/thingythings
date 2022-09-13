@@ -13,8 +13,9 @@ public class RecipeIngredientMapper :
     {
         return new()
         {
-            IngredientId = input.IngredientId,
-            Amount = input.Amount
+            Name = input.Name,
+            Amount = input.Amount,
+            Measurement = input.Measurement
         };
     }
 
@@ -22,8 +23,9 @@ public class RecipeIngredientMapper :
     {
         return new()
         {
-            IngredientId = input.IngredientId,
-            Amount = input.Amount
+            Name = input.Name,
+            Amount = input.Amount,
+            Measurement = input.Measurement
         };
     }
 
@@ -31,8 +33,9 @@ public class RecipeIngredientMapper :
     {
         return new Internal.RecipeIngredient
         {
-            IngredientId = input.Ingredient.IngredientId,
-            Amount = input.Ingredient.Amount
+            Name = input.Body.Name,
+            Amount = input.Body.Amount,
+            Measurement = input.Body.Measurement
         };
     }
 }

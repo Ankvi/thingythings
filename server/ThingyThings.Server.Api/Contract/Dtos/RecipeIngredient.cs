@@ -2,8 +2,7 @@
 
 namespace ThingyThings.Server.Api.Contract.Dtos;
 
-public record RecipeIngredient
+public record RecipeIngredient : IngredientAmount
 {
-    public string IngredientId { get; set; }
-    public IngredientAmount Amount { get; set; }
+    public string Name { get; set; }
 }

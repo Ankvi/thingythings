@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS recipe.ingredients(
     recipeId      UUID NOT NULL,
     ingredientId  UUID NOT NULL,
     amount        NUMERIC (8,1) NOT NULL DEFAULT 0,
-    measurement   MEASUREMENT NOT NULL,
+    measurement   recipe.MEASUREMENT NOT NULL,
 
 	FOREIGN KEY(recipeId) REFERENCES recipe.recipes(id),
  	FOREIGN KEY(ingredientId) REFERENCES ingredient.ingredients(id)

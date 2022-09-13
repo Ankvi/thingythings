@@ -1,9 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-namespace ThingyThings.Server.Api.Contract.Dtos;
+﻿namespace ThingyThings.Server.Api.Contract.Dtos;
 
 public class Recipe
 {
+    public string Name { get; set; }
     public string Description { get; set; }
 
     public IEnumerable<RecipeIngredient> Ingredients { get; set; }

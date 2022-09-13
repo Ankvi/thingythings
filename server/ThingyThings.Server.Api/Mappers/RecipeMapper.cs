@@ -19,9 +19,10 @@ public class RecipeMapper : IMapper<AddRecipeRequest, Internal.Recipe>
     {
         return new()
         {
-            Description = input.Description,
-            Ingredients = input.Ingredients.Select(ingredient => _ingredientMapper.Map(ingredient)),
-            Steps = input.Steps
+            Name = input.Body.Name,
+            Description = input.Body.Description,
+            Ingredients = input.Body.Ingredients.Select(ingredient => _ingredientMapper.Map(ingredient)),
+            Steps = input.Body.Steps
         };
     }
 }

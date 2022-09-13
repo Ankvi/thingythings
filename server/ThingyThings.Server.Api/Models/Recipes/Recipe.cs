@@ -16,6 +16,6 @@ public record Recipe : IDatabaseEntry
         Id = await dataReader.GetFieldValueAsync<Guid>(0);
         Name = await dataReader.GetFieldValueAsync<string>(1);
         Description = await dataReader.GetFieldValueAsync<string>(2);
-        Steps = await dataReader.GetFieldValueAsync<IEnumerable<string>>(3);
+        Steps = await dataReader.GetFieldValueAsync<string[]>(3);
     }
 }

@@ -12,6 +12,9 @@ public interface IPostgresDatabase
         where T : IDatabaseEntry, new();
     Task<T> GetSingle<T>(string query, CancellationToken token)
         where T : IDatabaseEntry, new();
+
+    Task Execute(string query, CancellationToken token);
+    Task Execute(string query, IEnumerable<NpgsqlParameter>? parameters, CancellationToken token);
 }
 
 public class PostgresDatabase : IPostgresDatabase
@@ -21,6 +24,19 @@ public class PostgresDatabase : IPostgresDatabase
     public PostgresDatabase(IPostgresConnector connector)
     {
         _connector = connector;
+    }
+
+    private async Task<NpgsqlCommand> GetCommand(string query, IEnumerable<NpgsqlParameter>? parameters, CancellationToken token)
+    {
+        var connection = await _connector.Connect(token);
+
+        var command = new NpgsqlCommand(query, connection);
+        if (parameters is not null)
+        {
+            command.Parameters.AddRange(parameters.ToArray());
+        }
+
+        return command;
     }
 
     public async Task<IEnumerable<T>> Get<T>(string query, IEnumerable<NpgsqlParameter>? parameters, CancellationToken token)
@@ -68,6 +84,18 @@ public class PostgresDatabase : IPostgresDatabase
     public async Task<T> GetSingle<T>(string query, CancellationToken token) where T : IDatabaseEntry, new()
     {
         return await GetSingle<T>(query, null, token);
+    }
+
+    public async Task Execute(string query, CancellationToken token)
+    {
+        await Execute(query, null, token);
+    }
+
+    public async Task Execute(string query, IEnumerable<NpgsqlParameter>? parameters, CancellationToken token)
+    {
+        await using var command = await GetCommand(query, parameters, token);
+
+        await command.ExecuteNonQueryAsync(token);
     }
 
     // public async Task<T> Insert<T>(string query, IEnumerable<NpgsqlParameter> parameters, CancellationToken token)
