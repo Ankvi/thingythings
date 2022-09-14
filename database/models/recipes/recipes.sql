@@ -7,12 +7,10 @@ CREATE TYPE recipe.measurement AS ENUM (
     'l',
     'dl',
     'cl',
-    'ml'
-);
-
-CREATE TABLE IF NOT EXISTS recipe.categories(
-    id      UUID PRIMARY KEY NOT NULL DEFAULT gen_random_uuid(),
-    name    TEXT NOT NULL
+    'ml',
+    'cup',
+    'tsp',
+    'tbsp'
 );
 
 CREATE TABLE IF NOT EXISTS recipe.recipes (
@@ -32,3 +30,10 @@ CREATE TABLE IF NOT EXISTS recipe.ingredients(
  	FOREIGN KEY(ingredientId) REFERENCES ingredient.ingredients(id)
 );
 
+CREATE TABLE IF NOT EXISTS recipe.categories(
+    recipeId      UUID NOT NULL,
+    categoryId  UUID NOT NULL,
+
+	FOREIGN KEY(recipeId) REFERENCES recipe.recipes(id),
+ 	FOREIGN KEY(categoryId) REFERENCES categories.category(id)
+);

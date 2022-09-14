@@ -1,5 +1,4 @@
 ﻿using MediatR;
-using ThingyThings.Server.Api.Contract.Dtos;
 using ThingyThings.Server.Api.Contract.Requests.Recipes;
 using ThingyThings.Server.Api.Mappers;
 using ThingyThings.Server.Api.Services;
@@ -19,7 +18,7 @@ public class AddIngredientToRecipeHandler : IRequestHandler<AddIngredientToRecip
         _service = service;
         _requestMapper = requestMapper;
     }
-    
+
     public async Task<IResult> Handle(AddIngredientToRecipeRequest request, CancellationToken cancellationToken)
     {
         var ingredient = _requestMapper.Map(request);
