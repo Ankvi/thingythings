@@ -9,11 +9,11 @@ namespace ThingyThings.Server.Api.Handlers.RecipeHandlers;
 public class AddIngredientToRecipeHandler : IRequestHandler<AddIngredientToRecipeRequest, IResult>
 {
     private readonly IRecipeService _service;
-    private readonly IMapper<AddIngredientToRecipeRequest, RecipeIngredient> _requestMapper;
+    private readonly IRecipeIngredientMapper _requestMapper;
 
     public AddIngredientToRecipeHandler(
         IRecipeService service,
-        IMapper<AddIngredientToRecipeRequest, RecipeIngredient> requestMapper)
+        IRecipeIngredientMapper requestMapper)
     {
         _service = service;
         _requestMapper = requestMapper;

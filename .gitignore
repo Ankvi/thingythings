@@ -4,3 +4,11 @@ node_modules
 
 .idea
 .env
+.DS_Store
+/build
+/.svelte-kit
+/package
+.env.*
+!.env.example
+.vercel
+.output

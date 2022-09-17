@@ -4,10 +4,14 @@ using Internal =  ThingyThings.Server.Api.Models.Recipes;
 
 namespace ThingyThings.Server.Api.Mappers;
 
-public class RecipeIngredientMapper :
-    IMapper<AddIngredientToRecipeRequest, Internal.RecipeIngredient>,
-    IMapper<RecipeIngredient, Internal.RecipeIngredient>,
-    IMapper<Internal.RecipeIngredient, RecipeIngredient>
+public interface IRecipeIngredientMapper
+{
+    Internal.RecipeIngredient Map(AddIngredientToRecipeRequest input);
+    Internal.RecipeIngredient Map(RecipeIngredient input);
+    RecipeIngredient Map(Internal.RecipeIngredient input);
+}
+
+public class RecipeIngredientMapper : IRecipeIngredientMapper
 {
     public Internal.RecipeIngredient Map(RecipeIngredient input)
     {

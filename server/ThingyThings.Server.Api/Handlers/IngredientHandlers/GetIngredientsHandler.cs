@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using ThingyThings.Server.Api.Contract.Requests.Ingredients;
 using ThingyThings.Server.Api.Contract.Responses;
 using ThingyThings.Server.Api.Mappers;

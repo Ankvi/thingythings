@@ -8,5 +8,8 @@ public enum Measurement
     L,
     DL,
     CL,
-    ML
+    ML,
+    CUP,
+    TBSP,
+    TSP
 }

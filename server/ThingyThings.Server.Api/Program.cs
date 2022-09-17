@@ -1,10 +1,13 @@
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Npgsql;
 using ThingyThings.Server.Api;
 using ThingyThings.Server.Api.Configuration;
+using ThingyThings.Server.Api.Contract.Dtos;
 using ThingyThings.Server.Api.Contract.Requests;
 using ThingyThings.Server.Api.Contract.Requests.Ingredients;
 using ThingyThings.Server.Api.Contract.Requests.Recipes;
+using ThingyThings.Server.Api.Contract.Responses;
 using ThingyThings.Server.Api.Database;
 using ThingyThings.Server.Api.Mappers;
 using ThingyThings.Server.Api.Repositories;
@@ -37,6 +40,7 @@ builder.Services.AddScoped<IRecipeService, RecipeService>();
 builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
 builder.Services.AddScoped<IIngredientService, IngredientService>();
 builder.Services.AddScoped(typeof(IMapper<,>), assembly);
+builder.Services.AddScoped<IRecipeIngredientMapper, RecipeIngredientMapper>();
 
 // Postgres
 var postgresConfiguration = builder.Configuration.GetSection<PostgresConfiguration>();
@@ -58,7 +62,7 @@ app.UseHttpsRedirection();
 app.MapEndpoint<GetRecipesRequest>();
 app.MapEndpoint<AddRecipeRequest>();
 app.MapEndpoint<AddIngredientToRecipeRequest>();
-app.MapEndpoint<AddIngredientRequest>();
+app.MapEndpoint<AddIngredientRequest>();    
 app.MapEndpoint<GetIngredientsRequest>();
 
 app.Run();
