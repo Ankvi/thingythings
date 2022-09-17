@@ -33,6 +33,8 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource/fira-mono": "^4.5.0"
+		"@fontsource/fira-mono": "^4.5.0",
+		"@sveltejs/adapter-node": "^1.0.0-next.92",
+		"@sveltejs/adapter-static": "^1.0.0-next.43"
 	}
 }

@@ -1,2 +1,2 @@
 INSERT INTO ingredient.ingredients(name)
-VALUES ('Salt'), ('Pepper')
+VALUES ('Salt'), ('Pepper'), ('Ground beef')

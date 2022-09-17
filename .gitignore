@@ -1,14 +1,26 @@
-node_modules
+# Misc
+.DS_Store
+
+# Editors
+.idea
+
+# Environment
+.env
+
+# .NET
 [Bb]in/
 [Oo]bj/
 
-.idea
-.env
-.DS_Store
-/build
-/.svelte-kit
-/package
+# Frontend / Svelte
+node_modules
+.svelte-kit
+build
+package
 .env.*
 !.env.example
 .vercel
 .output
+yarn.lock
+
+# Database
+pgdata

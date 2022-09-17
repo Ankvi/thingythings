@@ -35,5 +35,5 @@ CREATE TABLE IF NOT EXISTS recipe.categories(
     categoryId  UUID NOT NULL,
 
 	FOREIGN KEY(recipeId) REFERENCES recipe.recipes(id),
- 	FOREIGN KEY(categoryId) REFERENCES categories.category(id)
+ 	FOREIGN KEY(categoryId) REFERENCES category.categories(id)
 );
