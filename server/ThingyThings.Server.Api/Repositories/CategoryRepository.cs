@@ -9,6 +9,7 @@ public interface ICategoryRepository
 {
     Task<IEnumerable<Category>> GetCategories(CategoryType type, CancellationToken token);
     Task<IEnumerable<Category>> GetCategories(CancellationToken token);
+    Task<Category> AddCategory(Category category, CancellationToken token);
 }
 
 public class CategoryRepository : ICategoryRepository
@@ -19,7 +20,7 @@ public class CategoryRepository : ICategoryRepository
     {
         _database = database;
     }
-    
+
     public async Task<IEnumerable<Category>> GetCategories(CategoryType type, CancellationToken token)
     {
         return await _database.Get<Category>(@"
@@ -37,5 +38,17 @@ public class CategoryRepository : ICategoryRepository
         return await _database.Get<Category>(@"
             SELECT * FROM category.categories
         ", token);
+    }
+
+    public async Task<Category> AddCategory(Category category, CancellationToken token)
+    {
+        return await _database.GetSingle<Category>(@"
+            INSERT INTO category.Categories(type, name)
+            VALUES($1, $2)
+        ", new List<NpgsqlParameter>
+        {
+            new NpgsqlParameter<CategoryType>{ TypedValue = category.Type },
+            new NpgsqlParameter<string>{ TypedValue = category.Name }
+        },token);
     }
 }

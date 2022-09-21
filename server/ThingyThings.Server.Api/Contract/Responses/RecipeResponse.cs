@@ -5,6 +5,11 @@ namespace ThingyThings.Server.Api.Contract.Responses;
 
 public class RecipeResponse : BaseResponse<RecipeResponse>
 {
+    public RecipeResponse() : base(StatusCodes.Status200OK)
+    {
+
+    }
+
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
