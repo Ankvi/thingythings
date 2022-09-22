@@ -43,7 +43,7 @@ public class CategoryRepository : ICategoryRepository
     public async Task<Category> AddCategory(Category category, CancellationToken token)
     {
         return await _database.GetSingle<Category>(@"
-            INSERT INTO category.Categories(type, name)
+            INSERT INTO category.categories(type, name)
             VALUES($1, $2)
         ", new List<NpgsqlParameter>
         {

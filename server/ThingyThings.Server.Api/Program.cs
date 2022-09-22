@@ -1,3 +1,4 @@
+using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Npgsql;
@@ -48,6 +49,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped(typeof(IMapper<,>), assembly);
 builder.Services.AddScoped<IRecipeIngredientMapper, RecipeIngredientMapper>();
+builder.Services.AddScoped(typeof(IValidator<>), assembly);
 
 // Postgres
 var postgresConfiguration = builder.Configuration.GetSection<PostgresConfiguration>();
@@ -71,6 +73,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app
+    .MapEndpoint<LoginUserRequest>()
     .MapEndpoint<RegisterUserRequest>()
     .MapEndpoint<GetRecipesRequest>()
     .MapEndpoint<AddRecipeRequest>()

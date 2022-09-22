@@ -9,10 +9,11 @@ public record RegisterUserRequestBody
 {
     public string Email { get; set; }
     public string Password { get; set; }
+    public string ConfirmedPassword { get; set; }
 }
 
 [PostEndpoint("users/register")]
-public class RegisterUserRequest : IRequest<UserRegisteredResponse>
+public class RegisterUserRequest : HttpRequest
 {
     [FromBody]
     public RegisterUserRequestBody Details { get; set; }
