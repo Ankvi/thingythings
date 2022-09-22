@@ -10,6 +10,7 @@
 # .NET
 [Bb]in/
 [Oo]bj/
+*.DotSettings.user
 
 # Frontend / Svelte
 node_modules
