@@ -25,7 +25,7 @@ public class CategoryRepository : ICategoryRepository
     {
         return await _database.Get<Category>(@"
             SELECT *
-            FROM category.categories
+            FROM categories.category
             WHERE type = @type
         ", new []
         {
@@ -36,14 +36,14 @@ public class CategoryRepository : ICategoryRepository
     public async Task<IEnumerable<Category>> GetCategories(CancellationToken token)
     {
         return await _database.Get<Category>(@"
-            SELECT * FROM category.categories
+            SELECT * FROM categories.category
         ", token);
     }
 
     public async Task<Category> AddCategory(Category category, CancellationToken token)
     {
         return await _database.GetSingle<Category>(@"
-            INSERT INTO category.categories(type, name)
+            INSERT INTO categories.category(type, name)
             VALUES($1, $2)
         ", new List<NpgsqlParameter>
         {

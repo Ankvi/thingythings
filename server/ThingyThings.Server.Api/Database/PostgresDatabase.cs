@@ -56,7 +56,8 @@ public class PostgresDatabase : IPostgresDatabase
         while (await reader.ReadAsync(token))
         {
             var row = new T();
-            await row.Parse(reader);
+            // await row.Parse(reader);
+            DatabaseEntryHelper.SetFieldValues(reader, row);
             result.Add(row);
         }
 

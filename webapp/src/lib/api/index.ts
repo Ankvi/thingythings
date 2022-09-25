@@ -1,11 +1,12 @@
-const baseUrl = 'https://localhost:56534';
+import axios from 'axios';
+import { Agent } from 'https';
 
-export function api(method: 'POST' | 'GET' | 'DELETE', resource: string, data?: Record<string,unknown>) {
-    return fetch(`${baseUrl}/${resource}`, {
-        method,
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: data && JSON.stringify(data)
+const baseURL = 'https://localhost:56534';
+const api = axios.create({
+    baseURL,
+    httpsAgent: new Agent({
+        rejectUnauthorized: false
     })
-}
+})
+
+export default api;

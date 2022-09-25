@@ -11,7 +11,7 @@ public interface IRecipeRepository
 {
     Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token);
     Task<IEnumerable<Recipe>> GetRecipes(CancellationToken token);
-    Task AddIngredientToRecipe(Guid id, RecipeIngredient ingredient, CancellationToken token);
+    Task AddIngredientToRecipe(int id, RecipeIngredient ingredient, CancellationToken token);
 }
 
 public class RecipeRepository : IRecipeRepository
@@ -26,7 +26,7 @@ public class RecipeRepository : IRecipeRepository
     public async Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token)
     {
         var result = await _database.GetSingle<Recipe>(@"
-            INSERT INTO recipe.recipes(name, description, steps)
+            INSERT INTO recipes.recipe(name, description, steps)
             VALUES(@name, @description, @steps)
             RETURNING *
         ", new List<NpgsqlParameter>
@@ -48,20 +48,20 @@ public class RecipeRepository : IRecipeRepository
     {
         var result = await _database.Get<Recipe>($@"
             SELECT *
-            FROM recipe.recipes
+            FROM recipes.recipe
         ", token);
 
         await Parallel.ForEachAsync(result, token, async (recipe, _) =>
         {
             var ingredients = await _database.Get<RecipeIngredient>(@"
                 SELECT i.name, ri.amount, ri.measurement
-                FROM recipe.ingredients ri
-                LEFT JOIN ingredient.ingredients i
+                FROM recipes.recipe_ingredient ri
+                LEFT JOIN recipes.ingredient i
                 ON ri.ingredientId = i.id
                 WHERE ri.recipeId = @id
             ", new[]
             {
-                new NpgsqlParameter<Guid>("id", recipe.Id)
+                new NpgsqlParameter<int>("id", recipe.Id)
             }, _);
             recipe.Ingredients = ingredients;
         });
@@ -69,17 +69,17 @@ public class RecipeRepository : IRecipeRepository
         return result;
     }
 
-    public async Task AddIngredientToRecipe(Guid id, RecipeIngredient ingredient, CancellationToken token)
+    public async Task AddIngredientToRecipe(int id, RecipeIngredient ingredient, CancellationToken token)
     {
         await _database.Execute(@"
-            INSERT INTO recipe.ingredients(recipeId, ingredientId, amount, measurement)
+            INSERT INTO recipes.recipe_ingredient(recipeId, ingredientId, amount, measurement)
             VALUES($1, (
-                SELECT id FROM ingredient.ingredients
+                SELECT id FROM recipes.ingredient
                 WHERE name = $2
             ), $3, $4)
         ", new List<NpgsqlParameter>
         {
-            new NpgsqlParameter<Guid>{ TypedValue = id },
+            new NpgsqlParameter<int>{ TypedValue = id },
             new NpgsqlParameter<string>{ TypedValue = ingredient.Name },
             new NpgsqlParameter<decimal>{ TypedValue = ingredient.Amount },
             new NpgsqlParameter<Measurement>{ TypedValue = ingredient.Measurement }

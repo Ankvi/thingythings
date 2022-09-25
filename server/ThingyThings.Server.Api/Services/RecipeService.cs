@@ -8,7 +8,7 @@ public interface IRecipeService
 {
     Task<Recipe> AddRecipe(Recipe recipe, CancellationToken token);
     Task<IEnumerable<Recipe>> GetRecipes(CancellationToken token);
-    Task AddIngredientToRecipe(Guid id, RecipeIngredient ingredient, CancellationToken token);
+    Task AddIngredientToRecipe(int id, RecipeIngredient ingredient, CancellationToken token);
 }
 
 public class RecipeService : IRecipeService
@@ -30,7 +30,7 @@ public class RecipeService : IRecipeService
         return await _repository.GetRecipes(token);
     }
 
-    public async Task AddIngredientToRecipe(Guid id, RecipeIngredient ingredient, CancellationToken token)
+    public async Task AddIngredientToRecipe(int id, RecipeIngredient ingredient, CancellationToken token)
     {
         await _repository.AddIngredientToRecipe(id, ingredient, token);
     }

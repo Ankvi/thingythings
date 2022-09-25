@@ -1,5 +1,6 @@
 using System.Reflection;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ThingyThings.Server.Api.Handlers.Attributes;
 
@@ -39,6 +40,26 @@ public static class WebApplicationExtensions
                 break;
             case PostEndpoint post:
                 app.MapPost(post.Template, async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
+                break;
+            default:
+                throw new Exception($"Request '{requestType.Name}' does not contain an '{nameof(BaseEndpoint)}' attribute");
+        }
+
+        return app;
+    }
+
+    public static WebApplication MapAnonymousEndpoint<TRequest>(this WebApplication app)
+        where TRequest : IRequest<IResult>
+    {
+        var requestType = typeof(TRequest);
+        var endpoint = requestType.GetCustomAttribute<BaseEndpoint>();
+        switch (endpoint)
+        {
+            case GetEndpoint get:
+                app.MapGet(get.Template, [AllowAnonymous] async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
+                break;
+            case PostEndpoint post:
+                app.MapPost(post.Template, [AllowAnonymous] async (IMediator mediator, [AsParameters] TRequest request) => await mediator.Send(request));
                 break;
             default:
                 throw new Exception($"Request '{requestType.Name}' does not contain an '{nameof(BaseEndpoint)}' attribute");

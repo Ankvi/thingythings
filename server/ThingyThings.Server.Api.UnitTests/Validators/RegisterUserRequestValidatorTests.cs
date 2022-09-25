@@ -30,7 +30,7 @@ public class RegisterUserRequestValidatorTests
             {
                 Email = "test@example.com",
                 Password = "kekw",
-                ConfirmedPassword = "kekw"
+                ConfirmPassword = "kekw"
             }
         };
         var result = _validator.Validate(input);
@@ -46,7 +46,7 @@ public class RegisterUserRequestValidatorTests
             {
                 Email = "test@example.com",
                 Password = "kekw",
-                ConfirmedPassword = "lmao"
+                ConfirmPassword = "lmao"
             }
         };
         var result = _validator.Validate(input);
@@ -65,7 +65,7 @@ public class RegisterUserRequestValidatorTests
             {
                 Email = email,
                 Password = password,
-                ConfirmedPassword = confirmPassword
+                ConfirmPassword = confirmPassword
             }
         };
 
@@ -85,7 +85,7 @@ public class RegisterUserRequestValidatorTests
             {
                 Email = email,
                 Password = "kek",
-                ConfirmedPassword = "kek"
+                ConfirmPassword = "kek"
             }
         };
         var result = _validator.Validate(input);

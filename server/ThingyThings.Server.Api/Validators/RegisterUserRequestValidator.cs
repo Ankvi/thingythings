@@ -17,7 +17,8 @@ internal class RegisterUserRequestBodyValidator : AbstractValidator<RegisterUser
 {
     public RegisterUserRequestBodyValidator()
     {
-        RuleFor(_ => _.Email).EmailAddress();
-        RuleFor(_ => _.Password).Equal(_ => _.ConfirmedPassword);
+        RuleFor(_ => _.Email).NotNull().EmailAddress();
+        RuleFor(_ => _.Password).NotNull().Equal(_ => _.ConfirmPassword);
+        RuleFor(_ => _.ConfirmPassword).NotNull();
     }
 }

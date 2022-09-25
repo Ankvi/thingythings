@@ -17,7 +17,6 @@ public class LoginUserHandler : IRequestHandler<LoginUserRequest, IResult>
     public async Task<IResult> Handle(LoginUserRequest request, CancellationToken cancellationToken)
     {
         var user = await _service.LoginUser(request.Details.Email, request.Details.Password, cancellationToken);
-
         return Results.Ok(user is null
             ? new ErrorResponse("Invalid email or password")
             : new GeneralResponse(true, "Logged in"));

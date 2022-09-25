@@ -1,6 +1,14 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import logo from './svelte-logo.svg';
+    import Button, { Icon } from '@smui/button';
+    import Menu from '@smui/menu';
+    import type { MenuComponentDev } from '@smui/menu'
+    import List, { Item, Separator, Text, PrimaryText } from '@smui/list';
+	import { redirect } from '@sveltejs/kit';
+
+    let menu: MenuComponentDev;
+    let loggedIn = true;
 </script>
 
 <header>
@@ -35,6 +43,40 @@
 
 	<div class="corner">
 		<!-- TODO put something else here? github link? -->
+        <Button on:click={() => menu.setOpen(true)}>
+            <Icon class="material-icons">person</Icon>
+        </Button>
+        <Menu
+            bind:this={menu}
+            anchorCorner="BOTTOM_LEFT">
+            <List>
+                {#if loggedIn}
+                <Item href="/profile">
+                    <Text>
+                        Profile
+                    </Text>
+                </Item>
+                <Item href="/settings">
+                    <Text>
+                        Settings
+                    </Text>
+                </Item>
+                <Separator />
+                <Item on:SMUI:action={() => (loggedIn = false)}>
+                    <Text>
+                        Log out
+                    </Text>
+                </Item>
+                {/if}
+                {#if !loggedIn}
+                <Item href="/login">
+                    <Text>
+                        <a href="/login">Log in</a>
+                    </Text>
+                </Item>
+                {/if}
+            </List>
+        </Menu>
 	</div>
 </header>
 

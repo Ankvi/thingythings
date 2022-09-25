@@ -23,7 +23,7 @@ public class IngredientRepository : IIngredientRepository
     public async Task<Ingredient> AddIngredient(Ingredient ingredient, CancellationToken token)
     {
         var result = await _database.GetSingle<Ingredient>(@"
-            INSERT INTO ingredient.ingredients(name)
+            INSERT INTO recipes.ingredient(name)
             VALUES(@name)
             RETURNING *
         ", new []
@@ -38,7 +38,7 @@ public class IngredientRepository : IIngredientRepository
     {
         return await _database.Get<Ingredient>(@"
             SELECT *
-            FROM ingredient.ingredients
+            FROM recipes.ingredient
         ", token);
     }
 
@@ -46,7 +46,7 @@ public class IngredientRepository : IIngredientRepository
     {
         return await _database.GetSingle<Ingredient>(@"
             SELECT *
-            FROM ingredient.ingredients
+            FROM recipes.ingredient
             WHERE id = (@id)
         ", new []
         {

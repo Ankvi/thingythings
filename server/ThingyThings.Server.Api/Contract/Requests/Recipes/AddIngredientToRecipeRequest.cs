@@ -8,5 +8,5 @@ namespace ThingyThings.Server.Api.Contract.Requests.Recipes;
 public class AddIngredientToRecipeRequest : HttpRequestWithBody<RecipeIngredient>
 {
     [FromRoute(Name = "id")]
-    public Guid Id { get; set; }
+    public int Id { get; set; }
 }
